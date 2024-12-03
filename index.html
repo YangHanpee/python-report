@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡單計算機</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+</head>
+<body>
+    <header style="text-align: center; background-color: #4CAF50; color: white; padding: 10px;">
+        <h1>簡單計算機</h1>
+    </header>
+    <main style="text-align: center; padding: 20px;">
+        <p>選擇運算:</p>
+        <select id="operation">
+            <option value="1">加法</option>
+            <option value="2">減法</option>
+            <option value="3">乘法</option>
+            <option value="4">除法</option>
+        </select>
+        <p>
+            <input type="number" id="num1" placeholder="輸入第一個數字">
+            <input type="number" id="num2" placeholder="輸入第二個數字">
+        </p>
+        <button id="calculate-button">計算</button>
+        <p>結果：<span id="result"></span></p>
+
+        <!-- PyScript 代碼 -->
+        <py-script>
+            from js import document
+
+            def calculate():
+                # 獲取用戶選項和輸入數字
+                operation = document.querySelector("#operation").value
+                num1_input = document.querySelector("#num1").value
+                num2_input = document.querySelector("#num2").value
+
+                try:
+                    num1 = float(num1_input)
+                    num2 = float(num2_input)
+                except ValueError:
+                    document.querySelector("#result").innerText = "請輸入有效的數字！"
+                    return
+
+                # 計算結果
+                if operation == "1":
+                    result = num1 + num2
+                elif operation == "2":
+                    result = num1 - num2
+                elif operation == "3":
+                    result = num1 * num2
+                elif operation == "4":
+                    if num2 != 0:
+                        result = num1 / num2
+                    else:
+                        document.querySelector("#result").innerText = "除數不能為 0！"
+                        return
+                else:
+                    document.querySelector("#result").innerText = "無效選項！"
+                    return
+
+                # 顯示結果
+                document.querySelector("#result").innerText = f"結果是：{result:.2f}"
+
+            # 綁定按鈕事件
+            document.querySelector("#calculate-button").addEventListener("click", calculate)
+        </py-script>
+    </main>
+    <footer style="text-align: center; background-color: #4CAF50; color: white; padding: 10px;">
+        <p>© 2024 簡單計算機</p>
+    </footer>
+</body>
+</html>
