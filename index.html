@@ -1,39 +1,44 @@
-<py-script>
-    from js import document
-    
-    def calculate(event):
-        # 獲取用戶選項和輸入
-        operation = document.querySelector("#operation").value
-        num1_input = document.querySelector("#num1").value
-        num2_input = document.querySelector("#num2").value
-    
-        try:
-            num1 = float(num1_input)
-            num2 = float(num2_input)
-        except ValueError:
-            document.querySelector("#result").innerText = "請輸入有效的數字！"
-            return
-    
-        # 執行運算
-        if operation == "1":
-            result = num1 + num2
-        elif operation == "2":
-            result = num1 - num2
-        elif operation == "3":
-            result = num1 * num2
-        elif operation == "4":
-            if num2 != 0:
-                result = num1 / num2
-            else:
-                document.querySelector("#result").innerText = "除數不能為 0！"
-                return
-        else:
-            document.querySelector("#result").innerText = "無效選項！"
-            return
-    
-        # 顯示結果
-        document.querySelector("#result").innerText = f"結果是：{result:.2f}"
-    
-    document.querySelector("#calculate-button").addEventListener("click", calculate)
-    </py-script>
-    
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡單的靜態網站</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+</head>
+<body>
+    <header style="text-align: center; background-color: #4CAF50; color: white; padding: 10px;">
+        <h1>簡單的靜態網站</h1>
+    </header>
+    <main style="text-align: center; padding: 20px;">
+        <h2>用 Python 計算平方</h2>
+        <p>請輸入一個數字，我會幫你計算它的平方：</p>
+        <input type="number" id="user-input" placeholder="輸入數字">
+        <button id="calculate-button">計算</button>
+        <p>結果：<span id="result"></span></p>
+
+        <py-script>
+            from js import document
+
+            def calculate_square(event):
+                # 獲取輸入的值
+                user_input = document.querySelector("#user-input").value
+                if user_input:
+                    try:
+                        num = float(user_input)
+                        square = num ** 2
+                        # 顯示計算結果
+                        document.querySelector("#result").innerText = f"{square:.2f}"
+                    except ValueError:
+                        document.querySelector("#result").innerText = "請輸入有效的數字！"
+
+            # 綁定按鈕點擊事件
+            document.querySelector("#calculate-button").addEventListener("click", calculate_square)
+        </py-script>
+    </main>
+    <footer style="text-align: center; background-color: #4CAF50; color: white; padding: 10px;">
+        <p>© 2024 靜態網站範例</p>
+    </footer>
+</body>
+</html>
